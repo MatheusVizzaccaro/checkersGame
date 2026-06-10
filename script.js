@@ -38,5 +38,13 @@ function move(elementID) {
     element.classList.add('selected');
 }
 
+function getPos(elementID) {
+    let element = document.getElementById(elementID);
+    let x = parseInt(elementID[2]) + 1;   
+    let y = parseInt(elementID[0]) + 1;
+
+    return {"x": x, "y": y}
+}
+
 matrixFill(boardMatrix);
 boardFill(boardMatrix);
