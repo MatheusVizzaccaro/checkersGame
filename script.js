@@ -34,17 +34,17 @@ function boardFill(matrix) {
 }
 
 function move(elementID) {
-    let element = document.getElementById(elementID); 
-    element.classList.add('selected');
+    let possbl = possibleMoves(getPos(elementID).x, getPos(elementID).y);
 
-    console.log(getColor(elementID));
-    console.log(getPos(elementID));
+    for(let i=0;i<possbl.length;i++) {
+        highlight(`${possbl[i].y}_${possbl[i].x}`)
+    }
 }
 
 function getPos(elementID) {
     let element = document.getElementById(elementID);
-    let x = parseInt(elementID[2]) + 1;   
-    let y = parseInt(elementID[0]) + 1;
+    let x = parseInt(elementID[2]);   
+    let y = parseInt(elementID[0]);
 
     return {"x": x, "y": y}
 }
@@ -64,6 +64,52 @@ function getColor(elementID) {
             return 0
         }
     }
+}
+
+function possibleMoves(x, y) {
+    let returnArr = [];
+
+    if(isFilled(x-1, y+1) !== true && valueLength(x-1, y+1) !== false) {
+        returnArr.push({"x": x-1, "y": y+1})
+    }
+
+    if(isFilled(x-1, y-1) !== true && valueLength(x-1, y-1) !== false) {
+        returnArr.push({"x": x-1, "y": y-1})
+    }
+
+    if(isFilled(x+1, y+1) !== true && valueLength(x+1, y+1) !== false) {
+        returnArr.push({"x": x+1, "y": y+1})
+    }
+
+    if(isFilled(x+1, y-1) !== true && valueLength(x+1, y-1) !== false) {
+        returnArr.push({"x": x+1, "y": y-1})
+    }
+
+    return returnArr;
+}
+
+function isFilled(x, y) {
+    if(valueLength(x, y) !== false) {
+        if(boardMatrix[y][x].filled == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function valueLength(x, y) {
+    if(x > 7 || y > 7) {
+        return false
+    }
+    if(x < 0 || y < 0) {
+        return false
+    }
+}
+
+function highlight(elementID) {
+    let element = document.getElementById(elementID);
+    element.classList.add('selected');
 }
 
 matrixFill(boardMatrix);
