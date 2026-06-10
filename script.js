@@ -36,6 +36,9 @@ function boardFill(matrix) {
 function move(elementID) {
     let element = document.getElementById(elementID); 
     element.classList.add('selected');
+
+    console.log(getColor(elementID));
+    console.log(getPos(elementID));
 }
 
 function getPos(elementID) {
@@ -44,6 +47,23 @@ function getPos(elementID) {
     let y = parseInt(elementID[0]) + 1;
 
     return {"x": x, "y": y}
+}
+
+function getColor(elementID) {
+    let element = document.getElementById(elementID);
+    if(getPos(elementID).y % 2 == 0) {
+        if(getPos(elementID).x % 2 == 0) {
+            return 0
+        } else {
+            return 1
+        }
+    } else {
+        if(getPos(elementID).x % 2 == 0) {
+            return 1
+        } else {
+            return 0
+        }
+    }
 }
 
 matrixFill(boardMatrix);
